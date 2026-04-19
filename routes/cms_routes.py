@@ -214,7 +214,7 @@ def upload_file():
     file.save(filepath)
 
     return jsonify({
-        "url": f"http://localhost:5000/uploads/{filename}"
+        "url": f"https://nagpur-backend.onrender.com/uploads/{filename}"
     })
 
     
