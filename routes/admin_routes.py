@@ -24,6 +24,7 @@ admin_bp = Blueprint("admin", __name__)
 # =========================
 # 🔐 ADMIN LOGIN (NO JWT REQUIRED)
 # =========================
+
 @admin_bp.route("/login", methods=["POST"])
 def login():
     data = request.json
@@ -42,21 +43,48 @@ def login():
     ):
         return jsonify({"error": "Invalid credentials"}), 401
 
-    # 🔥 CREATE JWT TOKEN
-    # access_token = create_access_token(identity={
-    #     "id": admin.id,
-    #     "username": admin.username,
-    #     "role": "admin"
-    # })
+    # 🔥 CREATE TOKEN
+    access_token = create_access_token(identity=admin.id)
 
-    access_token = create_access_token(identity=str(admin.id))
-
+    # 🔥 SET COOKIE
     response = jsonify({"message": "Login successful"})
-
-    # 🍪 SET COOKIE
     set_access_cookies(response, access_token)
 
     return response
+
+# @admin_bp.route("/login", methods=["POST"])
+# def login():
+#     data = request.json
+
+#     if not data or "username" not in data or "password" not in data:
+#         return jsonify({"error": "Username and password required"}), 400
+
+#     admin = Admin.query.filter_by(username=data["username"]).first()
+
+#     if not admin:
+#         return jsonify({"error": "Invalid credentials"}), 401
+
+#     if not bcrypt.checkpw(
+#         data["password"].encode("utf-8"),
+#         admin.password.encode("utf-8")
+#     ):
+#         return jsonify({"error": "Invalid credentials"}), 401
+
+#     # 🔥 CREATE JWT TOKEN
+#     # access_token = create_access_token(identity={
+#     #     "id": admin.id,
+#     #     "username": admin.username,
+#     #     "role": "admin"
+#     # })
+
+#     access_token = create_access_token(identity=str(admin.id))
+
+#     response = jsonify({"message": "Login successful"})
+
+#     # 🍪 SET COOKIE
+#     set_access_cookies(response, access_token)
+
+#     return response
 
 
 # =========================

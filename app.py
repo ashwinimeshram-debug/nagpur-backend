@@ -28,25 +28,25 @@ from models import models   # adjust if path different
 # with app.app_context():
 #     db.create_all()
 
-with app.app_context():
-    # 🔍 check if admin exists
-    if not Admin.query.filter_by(email="admin@nrh.com").first():
+# with app.app_context():
+#     # 🔍 check if admin exists
+#     if not Admin.query.filter_by(email="admin@nrh.com").first():
         
-        hashed_pw = bcrypt.hashpw(
-            "admin123".encode("utf-8"),
-            bcrypt.gensalt()
-        ).decode("utf-8")
+#         hashed_pw = bcrypt.hashpw(
+#             "admin123".encode("utf-8"),
+#             bcrypt.gensalt()
+#         ).decode("utf-8")
 
-        admin = Admin(
-            username="admin",
-            email="admin@nrh.com",
-            password=hashed_pw
-        )
+#         admin = Admin(
+#             username="admin",
+#             email="admin@nrh.com",
+#             password=hashed_pw
+#         )
 
-        db.session.add(admin)
-        db.session.commit()
+#         db.session.add(admin)
+#         db.session.commit()
 
-        print("✅ Admin created successfully")
+#         print("✅ Admin created successfully")
 
 # 🔐 MAIL CONFIG
 app.config["MAIL_SERVER"] = "smtp.gmail.com"
