@@ -65,18 +65,18 @@ def uploaded_file(filename):
 
 with app.app_context():
     db.create_all()
-if not Admin.query.filter_by(username="admin").first():
-        admin = Admin(
-            username="admin",
-            email="admin@gmail.com",  # ✅ REQUIRED
-            name="Admin",             # ✅ safe to add
-            password=generate_password_hash("qwerty@123"),
-            is_active=True,
-            created_at=datetime.utcnow()
-        )
-        db.session.add(admin)
-        db.session.commit()
-        print("✅ Admin created successfully")
+    if not Admin.query.filter_by(username="admin").first():
+            admin = Admin(
+                username="admin",
+                email="admin@gmail.com",  # ✅ REQUIRED
+                name="Admin",             # ✅ safe to add
+                password=generate_password_hash("qwerty@123"),
+                is_active=True,
+                created_at=datetime.utcnow()
+            )
+            db.session.add(admin)
+            db.session.commit()
+            print("✅ Admin created successfully")
 
 
 # 🚀 RUN
