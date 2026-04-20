@@ -4,14 +4,14 @@ from config import Config
 from extensions import db, mail
 from routes.public_routes import public_bp
 from routes.admin_routes import admin_bp
-from flask_jwt_extended import JWTManager
+# from flask_jwt_extended import JWTManager
 import os
 from routes.cms_routes import cms_bp
 from routes.contact_routes import contact_bp
 import bcrypt
 from models.models import Admin
 
-jwt = JWTManager()
+# jwt = JWTManager()
 
 app = Flask(__name__)
 app.config.from_object(Config)
@@ -19,7 +19,7 @@ app.config.from_object(Config)
 # 🔥 INIT EXTENSIONS FIRST (VERY IMPORTANT)
 db.init_app(app)
 mail.init_app(app)
-jwt.init_app(app)
+# jwt.init_app(app)
 
 # 🔥 IMPORT MODELS (REQUIRED FOR TABLE CREATION)
 from models import models   # adjust if path different

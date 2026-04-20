@@ -21,12 +21,12 @@ class Config:
     # 📁 Uploads
     UPLOAD_FOLDER = "uploads"
 
-    # 🔐 JWT CONFIG (COOKIE BASED AUTH)
-    JWT_TOKEN_LOCATION = ["cookies"]
-    JWT_ACCESS_COOKIE_NAME = "access_token_cookie"
+    # # 🔐 JWT CONFIG (COOKIE BASED AUTH)
+    # JWT_TOKEN_LOCATION = ["cookies"]
+    # JWT_ACCESS_COOKIE_NAME = "access_token_cookie"
 
-    # 🔥 PRODUCTION SETTINGS (Render HTTPS)
-    JWT_COOKIE_SECURE = True          # MUST for HTTPS
-    JWT_COOKIE_SAMESITE = "None"      # Required for cross-origin
-    JWT_COOKIE_CSRF_PROTECT = False   # Keep false for now (simpler setup)
-    JWT_COOKIE_DOMAIN = None
+    # # 🔥 PRODUCTION SETTINGS (Render HTTPS)
+    # JWT_COOKIE_SECURE = True          # MUST for HTTPS
+    # JWT_COOKIE_SAMESITE = "None"      # Required for cross-origin
+    # JWT_COOKIE_CSRF_PROTECT = False   # Keep false for now (simpler setup)
+    # JWT_COOKIE_DOMAIN = None

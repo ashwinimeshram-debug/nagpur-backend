@@ -29,28 +29,25 @@ admin_bp = Blueprint("admin", __name__)
 def login():
     data = request.json
 
-    if not data or "username" not in data or "password" not in data:
-        return jsonify({"error": "Username and password required"}), 400
-
-    admin = Admin.query.filter_by(username=data["username"]).first()
+    admin = Admin.query.filter_by(username=data.get("username")).first()
 
     if not admin:
-        return jsonify({"error": "Invalid credentials"}), 401
+        return jsonify({"error": "Invalid username"}), 401
+
+    import bcrypt
 
     if not bcrypt.checkpw(
         data["password"].encode("utf-8"),
         admin.password.encode("utf-8")
     ):
-        return jsonify({"error": "Invalid credentials"}), 401
+        return jsonify({"error": "Invalid password"}), 401
 
-    # 🔥 CREATE TOKEN
-    access_token = create_access_token(identity=admin.id)
-
-    # 🔥 SET COOKIE
-    response = jsonify({"message": "Login successful"})
-    set_access_cookies(response, access_token)
-
-    return response
+    # ✅ SIMPLE SUCCESS RESPONSE (NO TOKEN)
+    return jsonify({
+        "message": "Login successful",
+        "admin_id": admin.id,
+        "username": admin.username
+    }), 200
 
 # @admin_bp.route("/login", methods=["POST"])
 # def login():
@@ -85,32 +82,6 @@ def login():
 #     set_access_cookies(response, access_token)
 
 #     return response
-
-
-# =========================
-# 🚪 API for auto-redirect:
-# =========================
-@admin_bp.route("/check-auth", methods=["GET"])
-@jwt_required()
-def check_auth():
-    current_admin = get_jwt_identity()
-    return jsonify({
-        "message": "Authenticated",
-        "admin_id": current_admin
-    })
-
-
-
-# =========================
-# 🚪 LOGOUT
-# =========================
-@admin_bp.route("/logout", methods=["POST"])
-# @jwt_required()
-def logout():
-    response = jsonify({"message": "Logged out successfully"})
-    unset_jwt_cookies(response)
-    return response
-
 
 # =========================
 # 📋 GET ALL PROPERTIES
