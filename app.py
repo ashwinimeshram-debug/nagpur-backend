@@ -9,10 +9,16 @@ import os
 from routes.cms_routes import cms_bp
 from routes.contact_routes import contact_bp
 
+
 jwt = JWTManager()
 
 app = Flask(__name__)
 app.config.from_object(Config)
+
+
+
+with app.app_context():
+    db.create_all()
 
 # 🔐 MAIL CONFIG
 app.config["MAIL_SERVER"] = "smtp.gmail.com"
