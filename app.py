@@ -58,6 +58,9 @@ UPLOAD_FOLDER = os.path.join(os.getcwd(), "uploads")
 def uploaded_file(filename):
     return send_from_directory(UPLOAD_FOLDER, filename)
 
+with app.app_context():
+    db.create_all()
+
 # 🚀 RUN
 if __name__ == "__main__":
     app.run(debug=True)
