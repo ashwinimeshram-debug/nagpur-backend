@@ -8,6 +8,9 @@ from flask_jwt_extended import JWTManager
 import os
 from routes.cms_routes import cms_bp
 from routes.contact_routes import contact_bp
+from models.models import Admin  # adjust if your model name is different
+from werkzeug.security import generate_password_hash
+
 
 jwt = JWTManager()
 
@@ -60,6 +63,16 @@ def uploaded_file(filename):
 
 with app.app_context():
     db.create_all()
+# 🔥 CREATE ADMIN (ONLY IF NOT EXISTS)
+    if not Admin.query.filter_by(username="admin").first():
+        admin = Admin(
+            username="admin",
+            password=generate_password_hash("qwerty@123")
+        )
+        db.session.add(admin)
+        db.session.commit()
+        print("✅ Admin user created")
+
 
 # 🚀 RUN
 if __name__ == "__main__":
