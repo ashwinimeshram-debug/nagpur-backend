@@ -640,12 +640,12 @@ def delete_property(id):
 
     return jsonify({"message": "Property deleted successfully"}), 200
 
-@app.route("/create-admin")
-def create_admin():
-    from werkzeug.security import generate_password_hash
-    from models.models import Admin
-    from datetime import datetime
+from werkzeug.security import generate_password_hash
+from models.models import Admin
+from datetime import datetime
 
+@admin_bp.route("/create-admin")
+def create_admin():
     admin = Admin.query.filter_by(username="admin").first()
 
     if not admin:
