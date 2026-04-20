@@ -42,6 +42,13 @@ def login():
     ):
         return jsonify({"error": "Invalid credentials"}), 401
 
+    # 🔥 CREATE JWT TOKEN
+    # access_token = create_access_token(identity={
+    #     "id": admin.id,
+    #     "username": admin.username,
+    #     "role": "admin"
+    # })
+
     access_token = create_access_token(identity=str(admin.id))
 
     response = jsonify({"message": "Login successful"})
@@ -70,23 +77,11 @@ def check_auth():
 # 🚪 LOGOUT
 # =========================
 @admin_bp.route("/logout", methods=["POST"])
-@jwt_required()
+# @jwt_required()
 def logout():
     response = jsonify({"message": "Logged out successfully"})
     unset_jwt_cookies(response)
     return response
-
-# =========================
-# 🚪 VERIFY ROUTE This is required to prevent: back button access, expired session issues, fake frontend access
-# =========================
-@admin_bp.route("/verify", methods=["GET"])
-@jwt_required()
-def verify_admin():
-    admin_id = get_jwt_identity()
-    return jsonify({
-        "valid": True,
-        "admin_id": admin_id
-    }), 200
 
 
 # =========================
@@ -639,34 +634,3 @@ def delete_property(id):
     db.session.commit()
 
     return jsonify({"message": "Property deleted successfully"}), 200
-
-@admin_bp.route("/create-admin")
-def create_admin():
-    admin = Admin.query.filter_by(username="admin").first()
-
-    if not admin:
-        hashed_password = bcrypt.hashpw(
-            "qwerty@123".encode("utf-8"),
-            bcrypt.gensalt()
-        ).decode("utf-8")
-
-        admin = Admin(
-            username="admin",
-            email="admin@gmail.com",
-            name="Admin",
-            password=hashed_password,
-            is_active=True,
-            created_at=datetime.utcnow()
-        )
-
-        db.session.add(admin)
-        db.session.commit()
-        return "✅ Admin created"
-
-    return "Admin already exists"
-
-# @admin_bp.route("/delete-admin")
-# def delete_admin():
-#     Admin.query.delete()
-#     db.session.commit()
-#     return "deleted"
