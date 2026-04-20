@@ -640,33 +640,33 @@ def delete_property(id):
 
     return jsonify({"message": "Property deleted successfully"}), 200
 
-# @admin_bp.route("/create-admin")
-# def create_admin():
-#     admin = Admin.query.filter_by(username="admin").first()
+@admin_bp.route("/create-admin")
+def create_admin():
+    admin = Admin.query.filter_by(username="admin").first()
 
-#     if not admin:
-#         hashed_password = bcrypt.hashpw(
-#             "qwerty@123".encode("utf-8"),
-#             bcrypt.gensalt()
-#         ).decode("utf-8")
+    if not admin:
+        hashed_password = bcrypt.hashpw(
+            "qwerty@123".encode("utf-8"),
+            bcrypt.gensalt()
+        ).decode("utf-8")
 
-#         admin = Admin(
-#             username="admin",
-#             email="admin@gmail.com",
-#             name="Admin",
-#             password=hashed_password,
-#             is_active=True,
-#             created_at=datetime.utcnow()
-#         )
+        admin = Admin(
+            username="admin",
+            email="admin@gmail.com",
+            name="Admin",
+            password=hashed_password,
+            is_active=True,
+            created_at=datetime.utcnow()
+        )
 
-#         db.session.add(admin)
-#         db.session.commit()
-#         return "✅ Admin created"
+        db.session.add(admin)
+        db.session.commit()
+        return "✅ Admin created"
 
-#     return "Admin already exists"
+    return "Admin already exists"
 
-@admin_bp.route("/delete-admin")
-def delete_admin():
-    Admin.query.delete()
-    db.session.commit()
-    return "deleted"
+# @admin_bp.route("/delete-admin")
+# def delete_admin():
+#     Admin.query.delete()
+#     db.session.commit()
+#     return "deleted"
