@@ -13,12 +13,11 @@ class Property(db.Model):
     description = db.Column(db.Text)
 
     transaction_type = db.Column(
-        db.Enum('buy', 'sell', 'rent'),
-        nullable=False
-    )
+    db.Enum("buy", "sell","rent", name="type_enum")
+)
 
     property_type = db.Column(
-        db.Enum('flat', 'plot', 'house', 'commercial'),
+        db.Enum('flat', 'plot', 'house', 'commercial', name="property_enum"),
         nullable=False
     )
 
@@ -27,8 +26,7 @@ class Property(db.Model):
     location = db.Column(db.String(255), nullable=False)
 
     status = db.Column(
-        db.Enum('pending', 'approved', 'rejected'),
-        default='pending'
+    db.Enum("pending", "approved", "rejected", name="status_enum")
     )
 
     is_active = db.Column(db.Boolean, default=False)
