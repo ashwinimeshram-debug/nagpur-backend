@@ -1,3 +1,5 @@
+import datetime
+
 from flask import Flask, send_from_directory
 from flask_cors import CORS
 from config import Config
@@ -63,15 +65,18 @@ def uploaded_file(filename):
 
 with app.app_context():
     db.create_all()
-# 🔥 CREATE ADMIN (ONLY IF NOT EXISTS)
-    if not Admin.query.filter_by(username="admin").first():
+if not Admin.query.filter_by(username="admin").first():
         admin = Admin(
             username="admin",
-            password=generate_password_hash("qwerty@123")
+            email="admin@gmail.com",  # ✅ REQUIRED
+            name="Admin",             # ✅ safe to add
+            password=generate_password_hash("qwerty@123"),
+            is_active=True,
+            created_at=datetime.utcnow()
         )
         db.session.add(admin)
         db.session.commit()
-        print("✅ Admin user created")
+        print("✅ Admin created successfully")
 
 
 # 🚀 RUN
