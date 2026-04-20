@@ -40,7 +40,7 @@ class Config:
     JWT_TOKEN_LOCATION = ["cookies"]
     JWT_ACCESS_COOKIE_NAME = "access_token_cookie"
 
-    JWT_COOKIE_SECURE = False          # ✅ Dev (True in production)
+    JWT_COOKIE_SECURE = True          # ✅ Dev (True in production)
     JWT_COOKIE_CSRF_PROTECT = False    # ✅ Disable for now (fixes your error)
-    JWT_COOKIE_SAMESITE = "Lax"        # ✅ IMPORTANT for Chrome
+    JWT_COOKIE_SAMESITE = "None"        # ✅ IMPORTANT for Chrome
     JWT_COOKIE_CSRF_PROTECT = False  # Enable later for security
