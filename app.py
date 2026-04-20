@@ -40,6 +40,7 @@ app.config["JWT_COOKIE_CSRF_PROTECT"] = False
 
 # 🔥 VERY IMPORTANT (MISSING BEFORE)
 app.config["JWT_ACCESS_COOKIE_PATH"] = "/"
+app.config["JWT_COOKIE_DOMAIN"] = ".onrender.com"
 
 # =========================
 # INIT EXTENSIONS
