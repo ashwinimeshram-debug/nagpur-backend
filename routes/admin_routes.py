@@ -639,3 +639,26 @@ def delete_property(id):
     db.session.commit()
 
     return jsonify({"message": "Property deleted successfully"}), 200
+
+@app.route("/create-admin")
+def create_admin():
+    from werkzeug.security import generate_password_hash
+    from models.models import Admin
+    from datetime import datetime
+
+    admin = Admin.query.filter_by(username="admin").first()
+
+    if not admin:
+        admin = Admin(
+            username="admin",
+            email="admin@gmail.com",
+            name="Admin",
+            password=generate_password_hash("qwerty@123"),
+            is_active=True,
+            created_at=datetime.utcnow()
+        )
+        db.session.add(admin)
+        db.session.commit()
+        return "✅ Admin created"
+
+    return "Admin already exists"
